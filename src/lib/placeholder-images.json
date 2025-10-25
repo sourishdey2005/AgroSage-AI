@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "A vibrant green farm field under a clear blue sky.",
+      "imageUrl": "https://images.unsplash.com/photo-1495107334309-fcf20504a5ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmYXJtJTIwZmllbGR8ZW58MHx8fHwxNzYxMjk4NTM4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "farm field"
+    },
+    {
+      "id": "crop-1",
+      "description": "A close-up of a wheat field, with golden stalks.",
+      "imageUrl": "https://images.unsplash.com/photo-1562956509-4e2fbef3afcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3aGVhdCUyMGZpZWxkfGVufDB8fHx8MTc2MTMyMzU2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wheat field"
+    },
+    {
+      "id": "crop-2",
+      "description": "A healthy tomato plant with ripe red tomatoes.",
+      "imageUrl": "https://images.unsplash.com/photo-1624699460549-2f48f275a73a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8dG9tYXRvJTIwcGxhbnR8ZW58MHx8fHwxNzYxMzgxNzkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "tomato plant"
+    },
+    {
+      "id": "crop-3",
+      "description": "A lush green rice paddy field in terraces.",
+      "imageUrl": "https://images.unsplash.com/photo-1655432866668-fef51361d3d7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8cmljZSUyMHBhZGR5fGVufDB8fHx8MTc2MTMzODA4Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "rice paddy"
+    },
+    {
+      "id": "disease-leaf",
+      "description": "A plant leaf showing signs of a common disease like blight.",
+      "imageUrl": "https://images.unsplash.com/photo-1658717798838-53ea7bbfcd18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxwbGFudCUyMGRpc2Vhc2V8ZW58MHx8fHwxNzYxMzA2OTc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "plant disease"
+    },
+    {
+      "id": "mandi-market",
+      "description": "A bustling Indian agricultural market (mandi).",
+      "imageUrl": "https://images.unsplash.com/photo-1737275859869-dd67883405be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8bWFya2V0JTIwYmF6YWFyfGVufDB8fHx8MTc2MTM1MjQxNnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "market bazaar"
+    },
+    {
+      "id": "government-building",
+      "description": "An official government building in India.",
+      "imageUrl": "https://images.unsplash.com/photo-1573181759662-1c146525b21f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnb3Zlcm5tZW50JTIwYnVpbGRpbmd8ZW58MHx8fHwxNzYxMzE5OTg1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "government building"
+    }
+  ]
 }
