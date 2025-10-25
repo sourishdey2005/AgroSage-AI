@@ -36,10 +36,11 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  ChartConfig,
+  type ChartConfig,
 } from '@/components/ui/chart';
 import { LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip } from 'recharts';
-import { predictCropPrice, type PriceForecastingOutput } from '@/ai/flows/price-forecasting';
+import { predictCropPrice } from '@/ai/flows/price-forecasting';
+import type { PriceForecastingOutput } from '@/ai/flows/price-forecasting';
 
 const schema = z.object({
   crop: z.string().min(1, 'Please select a crop'),

@@ -4,14 +4,12 @@
  * @fileOverview Predicts price spikes for a given crop across multiple mandis for the Agent Dashboard.
  * 
  * - agentPricePrediction: Predicts future prices and identifies potential spikes.
- * - AgentPricePredictionInput: Input schema for the prediction.
- * - AgentPricePredictionOutput: Output schema for the prediction.
  */
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const AgentPricePredictionInputSchema = z.object({
+const AgentPricePredictionInputSchema = z.object({
   crop: z.string().describe('The crop to predict prices for.'),
 });
 export type AgentPricePredictionInput = z.infer<typeof AgentPricePredictionInputSchema>;
@@ -27,7 +25,7 @@ const MandiPredictionSchema = z.object({
     forecast: z.array(DailyPriceSchema),
 });
 
-export const AgentPricePredictionOutputSchema = z.object({
+const AgentPricePredictionOutputSchema = z.object({
   predictions: z.array(MandiPredictionSchema),
 });
 export type AgentPricePredictionOutput = z.infer<typeof AgentPricePredictionOutputSchema>;

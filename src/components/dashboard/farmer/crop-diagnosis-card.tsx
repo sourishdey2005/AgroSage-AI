@@ -18,7 +18,8 @@ import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Upload, X, Leaf, Sparkles, Wand2 } from 'lucide-react';
-import { diagnoseCropDisease, type DiagnoseCropDiseaseOutput } from '@/ai/flows/crop-disease-diagnosis';
+import { diagnoseCropDisease } from '@/ai/flows/crop-disease-diagnosis';
+import type { DiagnoseCropDiseaseOutput } from '@/ai/flows/crop-disease-diagnosis';
 import { placeholderImages } from '@/lib/placeholder-images.json';
 
 const diseaseLeafImage = placeholderImages.find(p => p.id === 'disease-leaf');
@@ -157,7 +158,7 @@ export function CropDiagnosisCard() {
                       <div>
                         <Label>Severity</Label>
                         <div className="flex items-center gap-2">
-                           <Progress value={result.confidence * 100} indicatorClassName={getSeverityColor(result.severity)} />
+                           <Progress value={result.confidence * 100} className={getSeverityColor(result.severity)} />
                            <span className="font-semibold text-sm capitalize">{result.severity}</span>
                         </div>
                       </div>

@@ -22,7 +22,8 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { BrainCircuit, Search, Zap } from 'lucide-react';
-import { agentPricePrediction, type AgentPricePredictionOutput } from '@/ai/flows/agent-price-prediction';
+import { agentPricePrediction } from '@/ai/flows/agent-price-prediction';
+import type { AgentPricePredictionOutput } from '@/ai/flows/agent-price-prediction';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const crops = ['Tomato', 'Onion', 'Wheat', 'Potato', 'Rice', 'Sugarcane', 'Cotton', 'Soybean', 'Maize'];

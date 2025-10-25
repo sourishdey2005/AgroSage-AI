@@ -4,8 +4,6 @@
  * @fileOverview Crop disease diagnosis AI agent.
  *
  * - diagnoseCropDisease - A function that handles the crop disease diagnosis process.
- * - DiagnoseCropDiseaseInput - The input type for the diagnoseCropDisease function.
- * - DiagnoseCropDiseaseOutput - The return type for the diagnoseCropDisease function.
  */
 
 import {ai} from '@/ai/genkit';
@@ -21,7 +19,7 @@ const DiagnoseCropDiseaseInputSchema = z.object({
 export type DiagnoseCropDiseaseInput = z.infer<typeof DiagnoseCropDiseaseInputSchema>;
 
 const DiagnoseCropDiseaseOutputSchema = z.object({
-  diseaseName: z.string().describe('The name of the identified disease, or null if no disease is detected.'),
+  diseaseName: z.string().nullable().describe('The name of the identified disease, or null if no disease is detected.'),
   severity: z.string().describe('The severity of the disease (e.g., low, medium, high).'),
   confidence: z.number().describe('The confidence level of the disease detection (0-1).'),
   treatmentSuggestion: z.string().describe('A suggested treatment for the detected disease.'),

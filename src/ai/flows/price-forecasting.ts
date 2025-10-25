@@ -5,8 +5,6 @@
  *
  * It includes:
  * - `predictCropPrice`: An exported function that takes a crop name and location as input and returns a price forecast for the next 7 days.
- * - `PriceForecastingInput`: The input type for the predictCropPrice function.
- * - `PriceForecastingOutput`: The output type for the predictCropPrice function.
  */
 
 import {ai} from '@/ai/genkit';

@@ -4,8 +4,6 @@
  * @fileOverview An AI chatbot flow that provides assistance to farmers by answering questions about farming practices and market trends.
  *
  * - agrobotAssistance - A function that handles the chatbot assistance process.
- * - AgrobotAssistanceInput - The input type for the agrobotAssistance function.
- * - AgrobotAssistanceOutput - The return type for the agrobotAssistance function.
  */
 
 import {ai} from '@/ai/genkit';

@@ -32,7 +32,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { predictYieldAndProfit, type YieldForecastingOutput } from '@/ai/flows/yield-forecasting';
+import { predictYieldAndProfit } from '@/ai/flows/yield-forecasting';
+import type { YieldForecastingOutput } from '@/ai/flows/yield-forecasting';
 
 const schema = z.object({
   crop: z.string().min(1, 'Please select a crop'),

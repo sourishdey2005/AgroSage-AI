@@ -4,7 +4,6 @@
  * @fileOverview Analyzes crop suitability across different regions for the Agent Dashboard.
  * 
  * - getCropSuitability: Returns a suitability analysis for various crops and districts.
- * - CropSuitabilityOutput: Output schema for the analysis.
  */
 
 import { ai } from '@/ai/genkit';
@@ -18,7 +17,7 @@ const SuitabilityEntrySchema = z.object({
     remark: z.string().describe('A brief AI-generated comment on why the crop is or is not suitable.'),
 });
 
-export const CropSuitabilityOutputSchema = z.object({
+const CropSuitabilityOutputSchema = z.object({
   suitabilityMap: z.array(SuitabilityEntrySchema),
 });
 export type CropSuitabilityOutput = z.infer<typeof CropSuitabilityOutputSchema>;

@@ -1,11 +1,8 @@
-// src/ai/flows/policy-advisor.ts
 'use server';
 /**
  * @fileOverview An AI policy advisor for government officials that recommends policy adjustments based on current agricultural data.
  *
  * - getPolicyRecommendation - A function that retrieves policy recommendations.
- * - PolicyAdvisorInput - The input type for the getPolicyRecommendation function.
- * - PolicyRecommendationOutput - The return type for the getPolicyRecommendation function.
  */
 
 import {ai} from '@/ai/genkit';

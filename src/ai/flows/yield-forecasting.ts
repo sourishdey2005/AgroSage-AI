@@ -5,8 +5,6 @@
  *
  * It includes:
  * - `predictYieldAndProfit`: An exported function that takes crop name, area, and location.
- * - `YieldForecastingInput`: The input type for the function.
- * - `YieldForecastingOutput`: The output type for the function.
  */
 
 import {ai} from '@/ai/genkit';

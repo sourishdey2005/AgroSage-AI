@@ -12,7 +12,8 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Map, RefreshCw } from 'lucide-react';
-import { getCropSuitability, type CropSuitabilityOutput } from '@/ai/flows/crop-suitability';
+import { getCropSuitability } from '@/ai/flows/crop-suitability';
+import type { CropSuitabilityOutput } from '@/ai/flows/crop-suitability';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function RegionalCropSuitability() {
