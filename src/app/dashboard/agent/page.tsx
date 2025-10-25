@@ -28,7 +28,7 @@ import { type MandiData, type SupplyChainData, supplyChainData as staticSupplyCh
 import { FarmerQueryChatPanel } from '@/components/dashboard/agent/farmer-query-chat';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-const initialCrops = ['Tomato', 'Onion', 'Wheat', 'Potato', 'Rice'];
+const initialCrops = ['Tomato', 'Onion', 'Wheat', 'Potato', 'Rice', 'Sugarcane', 'Cotton', 'Soybean', 'Maize'];
 const mandis = ['Pune', 'Nagpur', 'Bangalore', 'Delhi', 'Lucknow'];
 const basePrices: Record<string, number> = {
     Tomato: 2500,
@@ -36,6 +36,10 @@ const basePrices: Record<string, number> = {
     Wheat: 2200,
     Potato: 2000,
     Rice: 4000,
+    Sugarcane: 3500,
+    Cotton: 6000,
+    Soybean: 4500,
+    Maize: 1800,
 };
 const baseVolumes: Record<string, number> = {
     Tomato: 500,
@@ -43,6 +47,10 @@ const baseVolumes: Record<string, number> = {
     Wheat: 1200,
     Potato: 700,
     Rice: 1100,
+    Sugarcane: 2000,
+    Cotton: 900,
+    Soybean: 600,
+    Maize: 1000,
 };
 
 const formatDate = (date: Date): string => {
@@ -303,7 +311,7 @@ export default function AgentDashboardPage() {
                         <CardDescription>Real-time mandi price graph from multiple regions.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-2 flex-wrap">
                                 <p className="font-medium text-sm">Select Crop:</p>
                                 {availableCrops.map(crop => (
                                     <Button
@@ -428,3 +436,5 @@ export default function AgentDashboardPage() {
     </>
   );
 }
+
+    
