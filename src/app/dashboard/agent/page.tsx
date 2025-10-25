@@ -24,11 +24,69 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip, Sankey, BarChart, Bar, ResponsiveContainer, Legend } from 'recharts';
-import { marketData, type MandiData, type CropData, supplyChainData } from '@/lib/mandi-data';
+import { type MandiData, type SupplyChainData, supplyChainData as staticSupplyChainData } from '@/lib/mandi-data';
 import { FarmerQueryChatPanel } from '@/components/dashboard/agent/farmer-query-chat';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-const crops = Array.from(new Set(marketData.map(d => d.crop)));
+const initialCrops = ['Tomato', 'Onion', 'Wheat', 'Potato', 'Rice'];
+const mandis = ['Pune', 'Nagpur', 'Bangalore', 'Delhi', 'Lucknow'];
+const basePrices: Record<string, number> = {
+    Tomato: 2500,
+    Onion: 3000,
+    Wheat: 2200,
+    Potato: 2000,
+    Rice: 4000,
+};
+const baseVolumes: Record<string, number> = {
+    Tomato: 500,
+    Onion: 800,
+    Wheat: 1200,
+    Potato: 700,
+    Rice: 1100,
+};
+
+const formatDate = (date: Date): string => {
+    return date.toISOString().split('T')[0];
+};
+
+const generatePriceHistory = (basePrice: number, days: number): {date: string, price: number}[] => {
+    const history: {date: string, price: number}[] = [];
+    let currentPrice = basePrice * (1 + (Math.random() - 0.5) * 0.2); // Start with a +/- 10% random variation
+    for (let i = days - 1; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        history.push({
+            date: formatDate(date),
+            price: Math.round(currentPrice),
+        });
+        const changePercent = (Math.random() - 0.45) * 0.1; // -4.5% to +5.5% change
+        currentPrice *= (1 + changePercent);
+    }
+    return history;
+};
+
+const generateVolume = (baseVolume: number): number => {
+    return Math.round(baseVolume + (Math.random() - 0.5) * baseVolume * 0.3); // +/- 15%
+};
+
+const generateMarketData = (): MandiData[] => {
+    const data: MandiData[] = [];
+    initialCrops.forEach(crop => {
+        mandis.forEach(mandi => {
+            // Not all crops are in all mandis
+            if (Math.random() > 0.3) {
+                 data.push({
+                    crop: crop,
+                    mandi: mandi,
+                    priceHistory: generatePriceHistory(basePrices[crop], 7),
+                    volume: generateVolume(baseVolumes[crop]),
+                });
+            }
+        });
+    });
+    return data;
+};
+
 
 type ProfitOpportunity = {
     buyMandi: MandiData | null;
@@ -38,14 +96,32 @@ type ProfitOpportunity = {
 
 
 export default function AgentDashboardPage() {
-  const [selectedCrop, setSelectedCrop] = React.useState<string>(crops[0]);
+  const [marketData, setMarketData] = React.useState<MandiData[]>(generateMarketData);
+  const [selectedCrop, setSelectedCrop] = React.useState<string>(initialCrops[0]);
   const [chartData, setChartData] = React.useState<any[]>([]);
   const [liveTableData, setLiveTableData] = React.useState<MandiData[]>([]);
   const [profitOpportunity, setProfitOpportunity] = React.useState<ProfitOpportunity | null>(null);
   const [tradeVolumeData, setTradeVolumeData] = React.useState<any[]>([]);
+  const [supplyChainData] = React.useState<SupplyChainData>(staticSupplyChainData);
+
+  // Live data simulation
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setMarketData(generateMarketData());
+    }, 5000); // Update every 5 seconds
+    return () => clearInterval(interval);
+  }, []);
 
   React.useEffect(() => {
     const cropData = marketData.filter(d => d.crop === selectedCrop);
+    if (cropData.length === 0 && initialCrops.length > 0) {
+      // If selected crop has no data after refresh, switch to first available crop
+      const firstAvailableCrop = initialCrops.find(c => marketData.some(d => d.crop === c));
+      if (firstAvailableCrop) {
+        setSelectedCrop(firstAvailableCrop);
+      }
+      return;
+    }
     
     // Chart Data Formatting
     const formattedChartData = cropData.reduce((acc, mandi) => {
@@ -80,27 +156,29 @@ export default function AgentDashboardPage() {
             }
         });
         
-        if (buyMandi && sellMandi) {
+        if (buyMandi && sellMandi && buyMandi.mandi !== sellMandi.mandi) {
              setProfitOpportunity({
                 buyMandi,
                 sellMandi,
                 spread: maxPrice - minPrice,
             });
+        } else {
+            setProfitOpportunity(null);
         }
     } else {
         setProfitOpportunity(null);
     }
-  }, [selectedCrop]);
-  
-  React.useEffect(() => {
-    const volumeData = crops.map(crop => {
+
+    // Trade Volume Calculation
+    const volumeData = initialCrops.map(crop => {
       const totalVolume = marketData
         .filter(d => d.crop === crop)
         .reduce((sum, current) => sum + current.volume, 0);
       return { crop, volume: totalVolume };
     });
     setTradeVolumeData(volumeData);
-  }, []);
+
+  }, [selectedCrop, marketData]);
 
   const chartConfig = {
     price: { label: 'Price', color: 'hsl(var(--primary))' },
@@ -117,6 +195,9 @@ export default function AgentDashboardPage() {
   };
 
   const mandiColors = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))', 'hsl(var(--chart-5))'];
+
+  const availableCrops = Array.from(new Set(marketData.map(d => d.crop)));
+
 
   return (
     <>
@@ -141,8 +222,8 @@ export default function AgentDashboardPage() {
               <BarChartIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">5</div>
-              <p className="text-xs text-muted-foreground">Across 3 states</p>
+              <div className="text-2xl font-bold">{liveTableData.length}</div>
+              <p className="text-xs text-muted-foreground">For {selectedCrop}</p>
             </CardContent>
           </Card>
           <Card>
@@ -224,7 +305,7 @@ export default function AgentDashboardPage() {
                         <CardContent className="space-y-6">
                             <div className="flex items-center gap-2">
                                 <p className="font-medium text-sm">Select Crop:</p>
-                                {crops.map(crop => (
+                                {availableCrops.map(crop => (
                                     <Button
                                         key={crop}
                                         variant={selectedCrop === crop ? 'default' : 'outline'}
@@ -250,8 +331,9 @@ export default function AgentDashboardPage() {
                                             <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(val) => new Date(val).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} />
                                             <YAxis tickLine={false} axisLine={false} tickMargin={8} />
                                             <Tooltip content={<ChartTooltipContent />} />
+                                            <Legend />
                                             {liveTableData.map((mandi, index) => (
-                                                <Line key={mandi.mandi} dataKey={mandi.mandi} type="monotone" stroke={mandiColors[index % mandiColors.length]} strokeWidth={2} dot={true} name={mandi.mandi} />
+                                                <Line key={mandi.mandi} dataKey={mandi.mandi} type="monotone" stroke={mandiColors[index % mandiColors.length]} strokeWidth={2} dot={false} name={mandi.mandi} />
                                             ))}
                                             </LineChart>
                                         </ChartContainer>
