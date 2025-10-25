@@ -36,7 +36,7 @@ export default function DashboardPage() {
       <div className="flex items-center">
         <h1 className="text-lg font-semibold md:text-2xl font-headline">Welcome to AgroWise AI</h1>
       </div>
-      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm">
+      <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1">
         <div className="flex flex-col items-center gap-2 text-center p-8">
           <h2 className="text-2xl font-bold tracking-tight font-headline">
             Select Your Dashboard

@@ -52,29 +52,27 @@ export default function DashboardLayout({
                 <Home className="h-4 w-4" />
                 Dashboard
               </Link>
-              <p className="px-3 py-2 text-xs font-semibold text-muted-foreground/80 mt-4">FARMER</p>
+              <p className="px-3 py-2 text-xs font-semibold text-muted-foreground/80 mt-4">ROLES</p>
               <Link
                 href="/dashboard/farmer"
-                className="flex items-center gap-3 rounded-lg bg-muted px-3 py-2 text-primary transition-all hover:text-primary"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Leaf className="h-4 w-4" />
-                My Farm{' '}
+                Farmer
               </Link>
-               <p className="px-3 py-2 text-xs font-semibold text-muted-foreground/80 mt-4">AGENT/TRADER</p>
               <Link
                 href="/dashboard/agent"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Briefcase className="h-4 w-4" />
-                Market Board
+                Agent/Trader
               </Link>
-              <p className="px-3 py-2 text-xs font-semibold text-muted-foreground/80 mt-4">GOVERNMENT</p>
               <Link
                 href="/dashboard/government"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Building className="h-4 w-4" />
-                Policy Insights
+                Government
               </Link>
             </nav>
           </div>

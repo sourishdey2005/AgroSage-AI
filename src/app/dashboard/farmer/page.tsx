@@ -17,7 +17,7 @@ export default function FarmerDashboardPage() {
             </div>
 
             <Tabs defaultValue="crop-health" className="space-y-4">
-                <TabsList>
+                <TabsList className="grid w-full grid-cols-3 md:grid-cols-5">
                     <TabsTrigger value="crop-health"><Leaf className="mr-2 h-4 w-4"/>Crop Health</TabsTrigger>
                     <TabsTrigger value="market-insights"><DollarSign className="mr-2 h-4 w-4"/>Market Insights</TabsTrigger>
                     <TabsTrigger value="agrobot"><Bot className="mr-2 h-4 w-4"/>AgroBot</TabsTrigger>
