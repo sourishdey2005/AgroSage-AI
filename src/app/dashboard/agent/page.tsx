@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, BarChart, Users, FileText, Search, LineChart as LineChartIcon, TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Briefcase, BarChart, Users, FileText, Search, LineChart as LineChartIcon, TrendingUp, TrendingDown, Minus, ArrowRight, ArrowDownCircle, ArrowUpCircle } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -28,14 +28,23 @@ import { marketData, type MandiData, type CropData } from '@/lib/mandi-data';
 
 const crops = Array.from(new Set(marketData.map(d => d.crop)));
 
+type ProfitOpportunity = {
+    buyMandi: MandiData | null;
+    sellMandi: MandiData | null;
+    spread: number;
+};
+
+
 export default function AgentDashboardPage() {
   const [selectedCrop, setSelectedCrop] = React.useState<string>(crops[0]);
   const [chartData, setChartData] = React.useState<any[]>([]);
   const [liveTableData, setLiveTableData] = React.useState<MandiData[]>([]);
+  const [profitOpportunity, setProfitOpportunity] = React.useState<ProfitOpportunity | null>(null);
 
   React.useEffect(() => {
     const cropData = marketData.filter(d => d.crop === selectedCrop);
     
+    // Chart Data Formatting
     const formattedChartData = cropData.reduce((acc, mandi) => {
       mandi.priceHistory.forEach((pricePoint, index) => {
         if (!acc[index]) {
@@ -48,6 +57,36 @@ export default function AgentDashboardPage() {
 
     setChartData(formattedChartData);
     setLiveTableData(cropData);
+
+    // Profit Opportunity Calculation
+    if (cropData.length > 1) {
+        let buyMandi: MandiData | null = null;
+        let sellMandi: MandiData | null = null;
+        let minPrice = Infinity;
+        let maxPrice = -Infinity;
+
+        cropData.forEach(mandi => {
+            const latestPrice = mandi.priceHistory[mandi.priceHistory.length - 1].price;
+            if (latestPrice < minPrice) {
+                minPrice = latestPrice;
+                buyMandi = mandi;
+            }
+            if (latestPrice > maxPrice) {
+                maxPrice = latestPrice;
+                sellMandi = mandi;
+            }
+        });
+        
+        if (buyMandi && sellMandi) {
+             setProfitOpportunity({
+                buyMandi,
+                sellMandi,
+                spread: maxPrice - minPrice,
+            });
+        }
+    } else {
+        setProfitOpportunity(null);
+    }
 
   }, [selectedCrop]);
   
@@ -114,6 +153,47 @@ export default function AgentDashboardPage() {
             </CardContent>
           </Card>
         </div>
+
+        {profitOpportunity && profitOpportunity.spread > 0 && (
+            <Card className="bg-accent/30 border-primary/50">
+                <CardHeader>
+                    <CardTitle className="font-headline flex items-center gap-2 text-xl">
+                        📈 Profit Opportunity: {selectedCrop}
+                    </CardTitle>
+                    <CardDescription>
+                        Identify where to buy low and sell high based on latest market prices.
+                    </CardDescription>
+                </CardHeader>
+                <CardContent className="grid md:grid-cols-3 items-center gap-4 text-center">
+                    <div className="flex flex-col items-center gap-2 p-4 bg-background/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                             <ArrowDownCircle className="h-6 w-6 text-green-500" />
+                             <h3 className="font-semibold text-lg">Buy At</h3>
+                        </div>
+                        <p className="text-2xl font-bold font-headline">{profitOpportunity.buyMandi?.mandi}</p>
+                        <p className="font-mono text-lg">₹{profitOpportunity.buyMandi?.priceHistory[profitOpportunity.buyMandi.priceHistory.length - 1].price}/qtl</p>
+                    </div>
+                    
+                    <div className="flex flex-col items-center gap-2">
+                        <ArrowRight className="h-8 w-8 text-muted-foreground hidden md:block" />
+                        <div className="text-green-600 dark:text-green-400">
+                             <p className="text-sm font-medium">Potential Profit</p>
+                             <p className="text-3xl font-bold font-headline">₹{profitOpportunity.spread.toFixed(2)}/qtl</p>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col items-center gap-2 p-4 bg-background/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                             <ArrowUpCircle className="h-6 w-6 text-red-500" />
+                             <h3 className="font-semibold text-lg">Sell At</h3>
+                        </div>
+                        <p className="text-2xl font-bold font-headline">{profitOpportunity.sellMandi?.mandi}</p>
+                        <p className="font-mono text-lg">₹{profitOpportunity.sellMandi?.priceHistory[profitOpportunity.sellMandi.priceHistory.length - 1].price}/qtl</p>
+                    </div>
+                </CardContent>
+            </Card>
+        )}
+
       <Card>
         <CardHeader>
           <CardTitle>📊 Live Mandi Analytics Board</CardTitle>
