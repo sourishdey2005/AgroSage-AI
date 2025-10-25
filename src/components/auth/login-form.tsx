@@ -78,7 +78,7 @@ export function LoginForm() {
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-headline">Welcome Back!</CardTitle>
         <CardDescription>
-          Sign in to access your AgroWise AI dashboard.
+          Sign in to access your AgroSageAI dashboard.
         </CardDescription>
       </CardHeader>
       <CardContent>

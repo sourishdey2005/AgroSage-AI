@@ -3,7 +3,7 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'AgroWise AI',
+  title: 'AgroSageAI',
   description: 'Autonomous Farm-to-Market Decision Platform',
 };
 

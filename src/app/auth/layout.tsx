@@ -14,7 +14,7 @@ export default function AuthLayout({
             <Link href="/" className="flex items-center space-x-2">
               <Icons.logo className="h-6 w-6 text-primary" />
               <span className="font-bold font-headline sm:inline-block">
-                AgroWise AI
+                AgroSageAI
               </span>
             </Link>
           </div>

@@ -18,7 +18,7 @@ export function SiteHeader() {
           <Link href="/" className="flex items-center space-x-2">
             <Icons.logo className="h-6 w-6 text-primary" />
             <span className="font-bold font-headline sm:inline-block">
-              AgroWise AI
+              AgroSageAI
             </span>
           </Link>
         </div>
@@ -54,7 +54,7 @@ export function SiteHeader() {
                 <div className="flex items-center mb-8">
                   <Link href="/" className="flex items-center space-x-2">
                     <Icons.logo className="h-6 w-6 text-primary" />
-                    <span className="font-bold font-headline">AgroWise AI</span>
+                    <span className="font-bold font-headline">AgroSageAI</span>
                   </Link>
                 </div>
                 <nav className="flex flex-col space-y-4 text-lg font-medium">

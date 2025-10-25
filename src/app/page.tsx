@@ -63,7 +63,7 @@ export default function LandingPage() {
                 Empowering Indian Farmers with Predictive AI 🌾
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground">
-                AgroWise AI is your autonomous farm-to-market decision platform for real-time crop health, dynamic price forecasting, and intelligent decision automation.
+                AgroSageAI is your autonomous farm-to-market decision platform for real-time crop health, dynamic price forecasting, and intelligent decision automation.
               </p>
               <div className="flex gap-4 justify-center md:justify-start">
                 <Button asChild size="lg" className="font-bold">
@@ -95,7 +95,7 @@ export default function LandingPage() {
             <div className="text-center space-y-4 mb-12">
               <h2 className="text-3xl md:text-4xl font-headline font-bold">A Smarter Way to Farm</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-                AgroWise AI brings cutting-edge technology to your fingertips, helping you make data-driven decisions at every step.
+                AgroSageAI brings cutting-edge technology to your fingertips, helping you make data-driven decisions at every step.
               </p>
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -121,7 +121,7 @@ export default function LandingPage() {
               <div className="space-y-4">
                 <h2 className="text-3xl md:text-4xl font-headline font-bold">From Farm to Market, Optimized by AI</h2>
                 <p className="text-muted-foreground">
-                  AgroWise AI was born from a vision to bridge the technology gap in Indian agriculture. We provide a pure software solution—no expensive hardware needed—to bring the power of artificial intelligence to every farmer, trader, and policymaker.
+                  AgroSageAI was born from a vision to bridge the technology gap in Indian agriculture. We provide a pure software solution—no expensive hardware needed—to bring the power of artificial intelligence to every farmer, trader, and policymaker.
                 </p>
                 <p className="text-muted-foreground">
                   Our platform integrates advanced AI models for disease detection, price forecasting, and more, all presented through an intuitive and accessible dashboard. We're dedicated to building a more efficient, profitable, and sustainable agricultural ecosystem.

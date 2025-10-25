@@ -54,7 +54,7 @@ export function SignupForm() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-headline">Create your Account</CardTitle>
-        <CardDescription>Join AgroWise AI and revolutionize your farming.</CardDescription>
+        <CardDescription>Join AgroSageAI and revolutionize your farming.</CardDescription>
       </CardHeader>
       <CardContent>
         <Alert className="mb-4 bg-accent/50">

@@ -41,7 +41,7 @@ export function DashboardHeader() {
               className="flex items-center gap-2 text-lg font-semibold mb-4"
             >
               <Package2 className="h-6 w-6 text-primary" />
-              <span className="font-headline">AgroWise AI</span>
+              <span className="font-headline">AgroSageAI</span>
             </Link>
             <Link
               href="/dashboard"
