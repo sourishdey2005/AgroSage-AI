@@ -30,37 +30,25 @@ export function LoginForm() {
   const [activeTab, setActiveTab] = React.useState('farmer');
 
   const {
-    register: registerLogin,
-    handleSubmit: handleLoginSubmit,
-    setValue: setLoginValue,
-    trigger,
-    formState: { errors: loginErrors },
+    register,
+    handleSubmit,
+    formState: { errors },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
   const onLoginSubmit: SubmitHandler<LoginSchema> = (data) => {
     console.log('Login data:', data);
-    // Handle email/password login
-    // For demo purposes, we can redirect based on role
-    if (data.email.startsWith('agent')) {
+    // Hardcoded credential check for simulation
+    if (data.email === 'agent@agrosage.in' && data.password === 'Agent@123') {
       window.location.href = '/dashboard/agent';
-    } else if (data.email.startsWith('gov')) {
+    } else if (data.email === 'gov@agrosage.in' && data.password === 'Gov@2025') {
       window.location.href = '/dashboard/government';
     } else {
+      // Default to farmer, or can add specific farmer checks
       window.location.href = '/dashboard/farmer';
     }
   };
-
-  const handleSpecialLogin = async (email: string, pass: string) => {
-    setLoginValue('email', email);
-    setLoginValue('password', pass);
-    const isValid = await trigger(); // Manually trigger validation
-    if (isValid) {
-      onLoginSubmit({ email, password: pass });
-    }
-  };
-
 
   return (
     <Card className="w-full max-w-md mx-auto">
@@ -74,9 +62,13 @@ export function LoginForm() {
         { (activeTab === 'agent' || activeTab === 'government') && (
             <Alert className="mb-4 bg-accent/50">
                 <Info className="h-4 w-4" />
-                <AlertTitle className="font-semibold">Special Login</AlertTitle>
+                <AlertTitle className="font-semibold">Demo Credentials</AlertTitle>
                 <AlertDescription>
-                Use the pre-registered credentials by clicking the button below.
+                  {activeTab === 'agent' ? (
+                    <span>Email: <strong>agent@agrosage.in</strong><br/>Pass: <strong>Agent@123</strong></span>
+                  ) : (
+                    <span>Email: <strong>gov@agrosage.in</strong><br/>Pass: <strong>Gov@2025</strong></span>
+                  )}
                 </AlertDescription>
             </Alert>
         )}
@@ -87,67 +79,67 @@ export function LoginForm() {
             <TabsTrigger value="government"><Building className="mr-2 h-4 w-4" />Govt.</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="farmer">
-             <form onSubmit={handleLoginSubmit(onLoginSubmit)} className="space-y-4 pt-6">
+          <form onSubmit={handleSubmit(onLoginSubmit)} className="space-y-4 pt-6">
+            <TabsContent value="farmer" className="space-y-4 m-0 p-0">
                 <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="farmer@example.com" {...registerLogin('email')} />
-                {loginErrors.email && <p className="text-sm text-destructive">{loginErrors.email.message}</p>}
+                <Label htmlFor="email-farmer">Email</Label>
+                <Input id="email-farmer" type="email" placeholder="farmer@example.com" {...register('email')} />
+                {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
                 </div>
                 <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password-farmer">Password</Label>
                     <Link href="#" className="text-sm text-primary hover:underline">
                     Forgot password?
                     </Link>
                 </div>
-                <Input id="password" type="password" {...registerLogin('password')} />
-                {loginErrors.password && <p className="text-sm text-destructive">{loginErrors.password.message}</p>}
+                <Input id="password-farmer" type="password" {...register('password')} />
+                {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
                 </div>
-                <Button className="w-full font-bold" type="submit">Sign In</Button>
-                 <div className="relative">
-                    <div className="absolute inset-0 flex items-center">
-                        <span className="w-full border-t" />
-                    </div>
-                    <div className="relative flex justify-center text-xs uppercase">
-                        <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
-                    </div>
-                    </div>
+            </TabsContent>
+
+            <TabsContent value="agent" className="space-y-4 m-0 p-0">
+                <div className="space-y-2">
+                    <Label htmlFor="email-agent">Email</Label>
+                    <Input id="email-agent" type="email" placeholder="agent@agrosage.in" {...register('email')} />
+                    {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="password-agent">Password</Label>
+                    <Input id="password-agent" type="password" {...register('password')} />
+                    {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
+                </div>
+            </TabsContent>
+
+            <TabsContent value="government" className="space-y-4 m-0 p-0">
+               <div className="space-y-2">
+                    <Label htmlFor="email-gov">Email</Label>
+                    <Input id="email-gov" type="email" placeholder="gov@agrosage.in" {...register('email')} />
+                    {errors.email && <p className="text-sm text-destructive">{errors.email.message}</p>}
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="password-gov">Password</Label>
+                    <Input id="password-gov" type="password" {...register('password')} />
+                    {errors.password && <p className="text-sm text-destructive">{errors.password.message}</p>}
+                </div>
+            </TabsContent>
+
+            <Button className="w-full font-bold" type="submit">Sign In</Button>
+            
+            {activeTab === 'farmer' && (
+              <>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                      <span className="w-full border-t" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                      <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                  </div>
+                </div>
                 <Button variant="outline" className="w-full">Sign in with Google</Button>
-            </form>
-          </TabsContent>
-          <TabsContent value="agent">
-            <div className="space-y-4 pt-6">
-                 {/* This form is just for structure, the button has its own logic */}
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="space-y-2">
-                        <Label htmlFor="agent-email">Email</Label>
-                        <Input id="agent-email" type="email" placeholder="agent@agrosage.in" {...registerLogin('email')} disabled />
-                    </div>
-                    <div className="space-y-2 mt-4">
-                        <Label htmlFor="agent-password">Password</Label>
-                        <Input id="agent-password" type="password" {...registerLogin('password')} disabled />
-                    </div>
-                    <Button className="w-full font-bold mt-4" onClick={() => handleSpecialLogin('agent@agrosage.in', 'Agent@123')}>Login as Agent</Button>
-                </form>
-            </div>
-          </TabsContent>
-          <TabsContent value="government">
-            <div className="space-y-4 pt-6">
-                 {/* This form is just for structure, the button has its own logic */}
-                <form onSubmit={(e) => e.preventDefault()}>
-                    <div className="space-y-2">
-                        <Label htmlFor="gov-email">Email</Label>
-                        <Input id="gov-email" type="email" placeholder="gov@agrosage.in" {...registerLogin('email')} disabled />
-                    </div>
-                    <div className="space-y-2 mt-4">
-                        <Label htmlFor="gov-password">Password</Label>
-                        <Input id="gov-password" type="password" {...registerLogin('password')} disabled />
-                    </div>
-                    <Button className="w-full font-bold mt-4" onClick={() => handleSpecialLogin('gov@agrosage.in', 'Gov@2025')}>Login as Government</Button>
-                </form>
-            </div>
-          </TabsContent>
+              </>
+            )}
+          </form>
         </Tabs>
         <div className="mt-6 text-center text-sm">
           Don't have an account?{' '}
