@@ -1,17 +1,17 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import {
   Bell,
   Home,
-  LineChart,
   Package2,
-  Settings,
-  Users,
   Briefcase,
   Building,
   Leaf,
-  Bot,
-  Receipt,
-  DollarSign
+  LineChart,
+  Map,
+  Percent,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -23,12 +23,34 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { DashboardHeader } from '@/components/dashboard/header';
+import { cn } from '@/lib/utils';
+
+const agentNavItems = [
+  {
+    title: 'Market Analytics',
+    icon: LineChart,
+    href: '/dashboard/agent',
+  },
+  {
+    title: 'Regional Suitability',
+    icon: Map,
+    href: '/dashboard/agent/regional-suitability',
+  },
+  {
+    title: 'Commission Tracker',
+    icon: Percent,
+    href: '/dashboard/agent/commission-tracker',
+  },
+];
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const isAgentDashboard = pathname.startsWith('/dashboard/agent');
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-card md:block">
@@ -47,7 +69,10 @@ export default function DashboardLayout({
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
                 href="/dashboard"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                  pathname === '/dashboard' && 'bg-muted text-primary'
+                )}
               >
                 <Home className="h-4 w-4" />
                 Dashboard
@@ -55,21 +80,50 @@ export default function DashboardLayout({
               <p className="px-3 py-2 text-xs font-semibold text-muted-foreground/80 mt-4">ROLES</p>
               <Link
                 href="/dashboard/farmer"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                  pathname.startsWith('/dashboard/farmer') && 'bg-muted text-primary'
+                )}
               >
                 <Leaf className="h-4 w-4" />
                 Farmer
               </Link>
               <Link
                 href="/dashboard/agent"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                   isAgentDashboard && 'bg-muted text-primary'
+                )}
               >
                 <Briefcase className="h-4 w-4" />
                 Agent/Trader
               </Link>
+              
+              {isAgentDashboard && (
+                <div className="grid items-start pl-7 text-sm font-medium">
+                  <p className="px-3 py-2 text-xs font-semibold text-muted-foreground/80 mt-2">AGENT TOOLS</p>
+                  {agentNavItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={cn(
+                        'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                        pathname === item.href && 'text-primary'
+                      )}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+              
               <Link
                 href="/dashboard/government"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary',
+                   pathname.startsWith('/dashboard/government') && 'bg-muted text-primary'
+                )}
               >
                 <Building className="h-4 w-4" />
                 Government
