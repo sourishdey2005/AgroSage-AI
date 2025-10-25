@@ -8,3 +8,5 @@ import '@/ai/flows/agrobot-assistance.ts';
 import '@/ai/flows/yield-forecasting.ts';
 import '@/ai/flows/agent-price-prediction.ts';
 import '@/ai/flows/crop-suitability.ts';
+import '@/ai/flows/crop-recommendations.ts';
+import '@/ai/flows/risk-heatmap.ts';

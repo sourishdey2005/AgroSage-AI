@@ -12,6 +12,8 @@ import {
   LineChart,
   Map,
   Percent,
+  BrainCircuit,
+  ShieldAlert,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -40,6 +42,16 @@ const agentNavItems = [
     title: 'Commission Tracker',
     icon: Percent,
     href: '/dashboard/agent/commission-tracker',
+  },
+  {
+    title: 'AI Recommendations',
+    icon: BrainCircuit,
+    href: '/dashboard/agent/recommendations',
+  },
+  {
+    title: 'Risk Heatmap',
+    icon: ShieldAlert,
+    href: '/dashboard/agent/risk-heatmap',
   },
 ];
 
