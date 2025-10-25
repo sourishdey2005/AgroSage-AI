@@ -25,6 +25,7 @@ import {
 } from '@/components/ui/chart';
 import { LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip } from 'recharts';
 import { marketData, type MandiData, type CropData } from '@/lib/mandi-data';
+import { FarmerQueryChatPanel } from '@/components/dashboard/agent/farmer-query-chat';
 
 const crops = Array.from(new Set(marketData.map(d => d.crop)));
 
@@ -193,80 +194,89 @@ export default function AgentDashboardPage() {
                 </CardContent>
             </Card>
         )}
+      
+      <div className="grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+            <Card>
+                <CardHeader>
+                <CardTitle>📊 Live Mandi Analytics Board</CardTitle>
+                <CardDescription>Real-time mandi price graph from multiple regions.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                    <div className="flex items-center gap-2">
+                        <p className="font-medium text-sm">Select Crop:</p>
+                        {crops.map(crop => (
+                            <Button
+                                key={crop}
+                                variant={selectedCrop === crop ? 'default' : 'outline'}
+                                size="sm"
+                                onClick={() => setSelectedCrop(crop)}
+                            >
+                                {crop}
+                            </Button>
+                        ))}
+                    </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>📊 Live Mandi Analytics Board</CardTitle>
-          <CardDescription>Real-time mandi price graph from multiple regions.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-            <div className="flex items-center gap-2">
-                <p className="font-medium text-sm">Select Crop:</p>
-                {crops.map(crop => (
-                    <Button
-                        key={crop}
-                        variant={selectedCrop === crop ? 'default' : 'outline'}
-                        size="sm"
-                        onClick={() => setSelectedCrop(crop)}
-                    >
-                        {crop}
-                    </Button>
-                ))}
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="text-lg font-headline">{selectedCrop} Price Trends (₹/Quintal)</CardTitle>
-                        <CardDescription>Last 7 Days</CardDescription>
-                      </CardHeader>
-                      <CardContent>
-                          <ChartContainer config={chartConfig} className="aspect-video w-full">
-                            <LineChart data={chartData} margin={{ left: 12, right: 12, top: 5, bottom: 5 }}>
-                              <CartesianGrid vertical={false} />
-                              <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(val) => new Date(val).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} />
-                              <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-                              <Tooltip content={<ChartTooltipContent />} />
-                              {liveTableData.map((mandi, index) => (
-                                <Line key={mandi.mandi} dataKey={mandi.mandi} type="monotone" stroke={mandiColors[index % mandiColors.length]} strokeWidth={2} dot={true} name={mandi.mandi} />
-                              ))}
-                            </LineChart>
-                          </ChartContainer>
-                      </CardContent>
-                    </Card>
-                </div>
-                <div className="lg:col-span-1">
-                     <Card>
-                        <CardHeader>
-                            <CardTitle className="text-lg font-headline">Live Prices</CardTitle>
-                             <CardDescription>Latest prices from connected mandis.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                             <Table>
-                                <TableHeader>
-                                  <TableRow>
-                                    <TableHead>Mandi</TableHead>
-                                    <TableHead className="text-right">Price</TableHead>
-                                    <TableHead className="text-right">Trend</TableHead>
-                                  </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                  {liveTableData.map((data) => (
-                                    <TableRow key={data.mandi}>
-                                      <TableCell className="font-medium">{data.mandi}</TableCell>
-                                      <TableCell className="text-right font-mono">₹{data.priceHistory[data.priceHistory.length - 1].price}/qtl</TableCell>
-                                      <TableCell className="flex justify-end">{getTrend(data.priceHistory).icon}</TableCell>
-                                    </TableRow>
-                                  ))}
-                                </TableBody>
-                              </Table>
-                        </CardContent>
-                     </Card>
-                </div>
-            </div>
-        </CardContent>
-      </Card>
+                    <div className="grid lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2">
+                            <Card>
+                            <CardHeader>
+                                <CardTitle className="text-lg font-headline">{selectedCrop} Price Trends (₹/Quintal)</CardTitle>
+                                <CardDescription>Last 7 Days</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <ChartContainer config={chartConfig} className="aspect-video w-full">
+                                    <LineChart data={chartData} margin={{ left: 12, right: 12, top: 5, bottom: 5 }}>
+                                    <CartesianGrid vertical={false} />
+                                    <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(val) => new Date(val).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} />
+                                    <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+                                    <Tooltip content={<ChartTooltipContent />} />
+                                    {liveTableData.map((mandi, index) => (
+                                        <Line key={mandi.mandi} dataKey={mandi.mandi} type="monotone" stroke={mandiColors[index % mandiColors.length]} strokeWidth={2} dot={true} name={mandi.mandi} />
+                                    ))}
+                                    </LineChart>
+                                </ChartContainer>
+                            </CardContent>
+                            </Card>
+                        </div>
+                        <div className="lg:col-span-1">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="text-lg font-headline">Live Prices</CardTitle>
+                                    <CardDescription>Latest prices from connected mandis.</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <Table>
+                                        <TableHeader>
+                                        <TableRow>
+                                            <TableHead>Mandi</TableHead>
+                                            <TableHead className="text-right">Price</TableHead>
+                                            <TableHead className="text-right">Trend</TableHead>
+                                        </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                        {liveTableData.map((data) => (
+                                            <TableRow key={data.mandi}>
+                                            <TableCell className="font-medium">{data.mandi}</TableCell>
+                                            <TableCell className="text-right font-mono">₹{data.priceHistory[data.priceHistory.length - 1].price}/qtl</TableCell>
+                                            <TableCell className="flex justify-end">{getTrend(data.priceHistory).icon}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                        </TableBody>
+                                    </Table>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+        <div className="lg:col-span-1">
+            <FarmerQueryChatPanel />
+        </div>
+      </div>
     </>
   );
 }
+
+    
