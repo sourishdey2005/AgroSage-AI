@@ -41,6 +41,12 @@
       "description": "An official government building in India.",
       "imageUrl": "https://images.unsplash.com/photo-1573181759662-1c146525b21f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxnb3Zlcm5tZW50JTIwYnVpbGRpbmd8ZW58MHx8fHwxNzYxMzE5OTg1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "government building"
+    },
+    {
+      "id": "geomap",
+      "description": "Stylized map of India showing various locations.",
+      "imageUrl": "https://images.unsplash.com/photo-1599736937208-8a8b846c2a63?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzEyODZ8MHwxfHNlYXJjaHwxfHxtYXAlMjBvZiUyMGluZGlhfGVufDB8fHx8MTY5OTU1ODQ4Nnww&ixlib=rb-4.0.3&q=80&w=1080",
+      "imageHint": "map india"
     }
   ]
 }

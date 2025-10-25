@@ -14,6 +14,8 @@ import {
   Percent,
   BrainCircuit,
   ShieldAlert,
+  FileText,
+  MapPin,
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -52,6 +54,21 @@ const agentNavItems = [
     title: 'Risk Heatmap',
     icon: ShieldAlert,
     href: '/dashboard/agent/risk-heatmap',
+  },
+  {
+    title: 'Alert Console',
+    icon: Bell,
+    href: '/dashboard/agent/alerts',
+  },
+  {
+    title: 'Smart Contract Logs',
+    icon: FileText,
+    href: '/dashboard/agent/smart-contracts',
+  },
+  {
+    title: 'Buyer-Seller GeoMap',
+    icon: MapPin,
+    href: '/dashboard/agent/geomap',
   },
 ];
 
