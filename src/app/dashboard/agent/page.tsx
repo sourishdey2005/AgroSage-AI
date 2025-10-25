@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Briefcase, BarChart as BarChartIcon, Users, FileText, Search, LineChart as LineChartIcon, TrendingUp, TrendingDown, Minus, ArrowRight, ArrowDownCircle, ArrowUpCircle, Package, Truck } from 'lucide-react';
+import { Briefcase, BarChart as BarChartIcon, Users, FileText, Search, LineChart as LineChartIcon, TrendingUp, TrendingDown, Minus, ArrowRight, ArrowDownCircle, ArrowUpCircle, Package, Truck, BrainCircuit, Map } from 'lucide-react';
 import {
   Table,
   TableBody,
@@ -27,6 +27,9 @@ import { LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip, Sankey, BarChart
 import { type MandiData, type SupplyChainData, supplyChainData as staticSupplyChainData } from '@/lib/mandi-data';
 import { FarmerQueryChatPanel } from '@/components/dashboard/agent/farmer-query-chat';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AgentPricePredictor } from '@/components/dashboard/agent/agent-price-predictor';
+import { RegionalCropSuitability } from '@/components/dashboard/agent/regional-crop-suitability';
+
 
 const initialCrops = ['Tomato', 'Onion', 'Wheat', 'Potato', 'Rice', 'Sugarcane', 'Cotton', 'Soybean', 'Maize'];
 const mandis = ['Pune', 'Nagpur', 'Bangalore', 'Delhi', 'Lucknow'];
@@ -299,10 +302,11 @@ export default function AgentDashboardPage() {
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
             <Tabs defaultValue="price-analytics">
-                 <TabsList className="grid w-full grid-cols-3 mb-4">
+                 <TabsList className="grid w-full grid-cols-4 mb-4">
                     <TabsTrigger value="price-analytics"><LineChartIcon />Price Analytics</TabsTrigger>
                     <TabsTrigger value="volume-overview"><BarChartIcon />Trade Volume</TabsTrigger>
                     <TabsTrigger value="supply-chain"><Truck />Supply Chain</TabsTrigger>
+                    <TabsTrigger value="ai-predictions"><BrainCircuit />AI Predictions</TabsTrigger>
                 </TabsList>
                  <TabsContent value="price-analytics">
                      <Card>
@@ -427,6 +431,10 @@ export default function AgentDashboardPage() {
                         </CardContent>
                     </Card>
                  </TabsContent>
+                 <TabsContent value="ai-predictions" className="space-y-6">
+                    <AgentPricePredictor />
+                    <RegionalCropSuitability />
+                 </TabsContent>
             </Tabs>
         </div>
         <div className="lg:col-span-1">
@@ -436,5 +444,3 @@ export default function AgentDashboardPage() {
     </>
   );
 }
-
-    
